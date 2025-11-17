@@ -8,62 +8,63 @@ import UpdateProduct from "./Components/UpdateProduct.jsx";
 
 import Home from "./Pages/Home.jsx";
 
-import{Routes,Route} from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 
 export const serverUrl = "http://localhost:4000";
 
 import ProtectedRoute from "./Components/ProtectedRoute.jsx";
 
+import ViewUsers from "./Components/ViewUsers.jsx";
 
+import ShowallProducts from "./Components/ShowallProducts.jsx";
+import ProductUpdate from "./Components/ProductUpdate.jsx";
 
+const App = () => {
+  return (
+    <div>
+      <Routes>
+        <Route path={"/"} element={<Home />} />
 
+        <Route path={"/login"} element={<Login />} />
 
+        <Route path={"/signup"} element={<Signup />} />
 
-const App = ()=>{
-
-      return (
-          <div  >
-
-
-            <Routes>
-
-                <Route path={'/'} element = {<Home />} />
-
-               <Route path={'/login'} element={<Login />} />
-
-
-               <Route path={'/signup'} element={<Signup/>} />
-
-
-               {/* <Route path={'/admin'} element={<Admindashboard />} />
+        {/* <Route path={'/admin'} element={<Admindashboard />} />
 
                <Route path={'/customer'} element={<Customerdashboard />} /> */}
 
+        <Route
+          path="/admin"
+          element={
+            <ProtectedRoute role="admin">
+              <Admindashboard />
+            </ProtectedRoute>
+          }
+        />
 
-      <Route path="/admin" element={
-    <ProtectedRoute role="admin">
-      <Admindashboard />
-    </ProtectedRoute>
-  }
-           />
+        <Route
+          path="/customer"
+          element={
+            <ProtectedRoute role="user">
+              {" "}
+              <Customerdashboard />{" "}
+            </ProtectedRoute>
+          }
+        />
 
-<Route  path="/customer"   element={  <ProtectedRoute role="user">  <Customerdashboard />  </ProtectedRoute>} />
+        {/* Unauthorized Page */}
+        <Route path="/unauthorized" element={<h1>Unauthorized Access</h1>} />
 
-{/* Unauthorized Page */}
-<Route path="/unauthorized" element={<h1>Unauthorized Access</h1>} />
+        <Route path={"/create"} element={<CreateProduct />} />
 
+        <Route path={"/update/product/:id"} element={<ProductUpdate />} />
 
+        <Route path={"/view"} element={<ViewUsers />} />
 
-               <Route path={'/create'} element={<CreateProduct />}  />
+        <Route path={"/products"} element={<ShowallProducts />} />
+      </Routes>
+    </div>
+  );
+};
 
-               <Route path={'/update/:id'} element={<UpdateProduct/>}  />
-
-            </Routes>
-
-
-          </div>
-      )
-}
-
-
-export default App ;
+export default App;

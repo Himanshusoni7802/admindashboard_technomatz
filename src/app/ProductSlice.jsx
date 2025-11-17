@@ -22,19 +22,19 @@ export const fetchUsers = createAsyncThunk(
 
 
 
-export const updateUserApi = createAsyncThunk(
+export const updateProductApi = createAsyncThunk(
   "product/updateUserApi",
   async (userData, { rejectWithValue }) => {
     try {
-      const response = await axios.put(
-        `${serverUrl}/api/user/updateuser/${userData.id}`,
+      const response = await axios.post(
+        `${serverUrl}/api/product/updateproduct/${userData.id}`,
         userData
       );
 
       console.log("✅ Update API Response:", response.data);
 
 
-      return response.data.user;
+      return response.data.product;
     } catch (err) {
       console.error("Update Error:", err);
       return rejectWithValue(err.response?.data || "Update failed");
@@ -44,16 +44,17 @@ export const updateUserApi = createAsyncThunk(
 
 
 
-export const  deleteUserApi = createAsyncThunk(
-    "product/deleteUserApi" , async(id,{rejectWithValue})=>{
+export const  deleteProductApi = createAsyncThunk(
+    "product/deleteProductApi" , async(id,{rejectWithValue})=>{
 
         try {
 
-            const response = await axios.delete(`${serverUrl}/api/user/deleteuser/${id}`)
+            const response = await axios.delete(`${serverUrl}/api/product/delete/${id}`)
 
-            //console.log(response);
+            console.log(response);
 
-            return response.data ;
+            return response.data.findid ;
+            
 
 
 
@@ -79,10 +80,10 @@ const productSlice = createSlice({
 
   reducers: {
 
-    addProduct: (state, action) => {
-      const { id, name, email, role } = action.payload;
-      state.data.push({ id, name, email, role });
-    },
+    // addProduct: (state, action) => {
+    //   const { id, name, email, role } = action.payload;
+    //   state.data.push({ id, name, email, role });
+    // },
 
 
     deleteProduct: (state, action) => {
@@ -110,11 +111,11 @@ const productSlice = createSlice({
       })
 
 
-      .addCase(updateUserApi.pending, (state) => {
+      .addCase(updateProductApi.pending, (state) => {
         state.loading = true;
         state.error = null;
       })
-      .addCase(updateUserApi.fulfilled, (state, action) => {
+      .addCase(updateProductApi.fulfilled, (state, action) => {
         state.loading = false;
         const updatedUser = action.payload;
 
@@ -127,26 +128,27 @@ const productSlice = createSlice({
             : item
         );
       })
-      .addCase(updateUserApi.rejected, (state, action) => {
+      .addCase(updateProductApi.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
       })
 
-      .addCase(deleteUserApi.pending,(state)=>{
+      .addCase(deleteProductApi.pending,(state)=>{
            state.loading = true,
            state.error = null
       })
-      .addCase(deleteUserApi.fulfilled,(state,action)=>{
+      .addCase(deleteProductApi.fulfilled,(state,action)=>{
 
           state.loading = false ;
 
           const deletedId = action.meta.arg ;
 
 
+
           state.data =  state.data.filter(item => item._id !== deletedId);
 
       })
-      .addCase(deleteUserApi.rejected,(state,action)=>{
+      .addCase(deleteProductApi.rejected,(state,action)=>{
              state.loading = false,
              state.error = action.payload
 

@@ -11,7 +11,7 @@ import store from './app/store.jsx'
 
 
 createRoot(document.getElementById('root')).render(
-  <StrictMode>
+
 
     <BrowserRouter>
 
@@ -26,5 +26,7 @@ createRoot(document.getElementById('root')).render(
 
     </BrowserRouter>
 
-  </StrictMode>,
+    
+
+
 )

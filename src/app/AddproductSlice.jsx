@@ -19,9 +19,9 @@ export const fetchProducts = createAsyncThunk(
     try {
       const response = await axios.get(`${serverUrl}/api/product/allproduct`);
 
-       console.log("-------res",response.data);
+      // console.log("-------res",response.data);
 
-      return response.data;
+      return response.data.findall;
     } catch (err) {
       return rejectWithValue(err.response?.data || "Failed to fetch users");
     }
@@ -37,10 +37,9 @@ export const createProducts = createAsyncThunk(
 
       const response = await axios.post(`${serverUrl}/api/product/createproduct`,userData);
 
-      console.log(response.data) ;
+        console.log('response from createProducts',response)
 
-
-      return response.data ;
+      return response?.data?.data ;
 
 
     } catch (error) {
@@ -60,7 +59,7 @@ export const filterPrducts = createAsyncThunk("addpro/filterProducts",async(data
 
     const response = await axios.get(`${serverUrl}/api/product/findproduct/${data}`);
 
-    //console.log("response from api",response.data);
+   // console.log("response from api fil",response.data);
 
     return response.data
 
@@ -81,7 +80,6 @@ const AddproductSlice = createSlice({
 
      name:'addpro',
      initialState:{
-
       loading: false,
       error: null,
       data: [],
@@ -110,7 +108,11 @@ const AddproductSlice = createSlice({
         })
         .addCase(fetchProducts.fulfilled, (state, action) => {
           state.loading = false;
-          state.data = action.payload;
+
+          console.log("fetchproducts state",state.data);
+
+
+          state.data= action.payload;
         })
         .addCase(fetchProducts.rejected, (state, action) => {
           state.loading = false;
@@ -125,8 +127,16 @@ const AddproductSlice = createSlice({
 
         })
         .addCase(createProducts.fulfilled,(state,action)=>{
-              state.loading = fale,
-              state.data = state.data.push(action.payload)
+              state.loading = false ;
+
+              console.log("state from createProducts",state);
+
+
+             // state.addpro = state?.addpro?.push(action.payload)
+
+            const ds = action.payload;
+state?.data?.push(ds);  // without question mark this will give you error
+
         })
 
         .addCase(createProducts.rejected,(state,action)=>{
@@ -134,25 +144,7 @@ const AddproductSlice = createSlice({
               state.error = action.payload
         })
 
-        /*.addCase(filterPrducts.pending,(state,action)=>{
 
-            state.loading = true,
-            state.error = null
-
-        })
-
-        .addCase(filterPrducts.fulfilled,(state,action)=>{
-              state.loading = false,
-              state.data = action.payload
-        })
-
-        .addCase(filterPrducts.rejected,(state,action)=>{
-               state.loading = true,
-               state.error = action.payload;
-
-        })
-
-        */
 
 
      }

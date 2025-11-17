@@ -97,7 +97,7 @@ const value={
 
       return(
 
-        <div className="border-2 w-[500px] h-[600px] flex justify-center items-center mx-50">
+        <div className="shadow-2xl w-[450px] h-[500px] flex justify-center items-center mx-[30%]">
 
 
           <form  >
@@ -129,15 +129,28 @@ const value={
 
                  <div>
 
-                <button type="submit" className="bg-green-600 px-2 my-3 mx-2" onClick={(e)=> handleSubmit(e,"admin")}>Login as Admin</button>
+                <button type="submit" className="bg-green-600 px-4 my-3 mx-2 py-3 rounded-2xl" px- onClick={(e)=> handleSubmit(e,"admin")}>Login as Admin</button>
 
-                <button type="submit" className="bg-green-600 px-2 my-3 mx-2" onClick={(e)=> handleSubmit(e,"user")}>Login as Customer</button>
+                <button type="submit" className="bg-green-600 px-4 my-3 mx-2 py-3 rounded-2xl" onClick={(e)=> handleSubmit(e,"user")}>Login as Customer</button>
 
                 <div className="flex ">
 
-                <p>Do not have an account </p>
 
-                <Link className="bg-green-700 px-3 py-3 my-6 w-[100px] rounded-2xl" to={'/signup'} >Signup </Link>
+
+
+
+                {/* <Link className="bg-green-700 px-3 py-3 my-6  mx-[0%] w-[100px] rounded-2xl " to={'/signup'} >Signup </Link> */}
+
+
+                <div className="flex flex-col items-center">
+
+                <p className="text-center">Do not have an account </p>
+
+                <Link className="bg-green-700 px-6 py-3 w-[100px] rounded-2xl mx-30 my-3 text-center" to={'/signup'} >Signup</Link>
+
+
+                </div>
+
 
                 </div>
 

@@ -32,20 +32,20 @@ const Customerdashboard = () => {
     try {
       const result = await dispatch(filterPrducts(text));
 
-      console.log(result);
-      
+     // console.log(result);
+
 
       if (result.payload) {
-        dispatch(addFilterData(result.payload)); // IMPORTANT FIX
+        dispatch(addFilterData(result.payload));
       }
     } catch (error) {
       console.log(error);
     }
   };
 
-  useEffect(() => {
-    searchItem();
-  }, []);
+  // useEffect(() => {
+  //   searchItem();
+  // }, []);
 
 const AllData=data?.findall?data?.findall:data
 
@@ -80,6 +80,8 @@ const AllData=data?.findall?data?.findall:data
                 className="border rounded-xl p-4 shadow hover:shadow-lg transition-all duration-200 bg-white"
               >
                 <h2 className="text-xl font-semibold">{item.name}</h2>
+
+               
 
                 <p className="text-gray-600 text-sm my-2">{item.description}</p>
 
