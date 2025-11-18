@@ -1,4 +1,4 @@
-import ProductPage from "./ProductPage.jsx";
+import ProductPage from "./ProductPage";
 
 //import FetchUser from "../hooksapi/FetchUser.jsx";
 

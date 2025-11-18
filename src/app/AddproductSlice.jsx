@@ -14,14 +14,17 @@ import { serverUrl } from "../App";
 
 export const fetchProducts = createAsyncThunk(
   "addpro/fetchProducts",
-  async (_, { rejectWithValue }) => {
+  async (cat, { rejectWithValue }) => {
    // console.log("==================================")
     try {
-      const response = await axios.get(`${serverUrl}/api/product/allproduct`);
+      const response = await axios.get(`${serverUrl}/api/product/allproduct`, {
+        params: { category: cat}
+      });
 
-      // console.log("-------res",response.data);
+      console.log("-------res",response.data);
 
-      return response.data.findall;
+      return response.data.products;
+
     } catch (err) {
       return rejectWithValue(err.response?.data || "Failed to fetch users");
     }
@@ -57,9 +60,11 @@ export const filterPrducts = createAsyncThunk("addpro/filterProducts",async(data
 
   try {
 
-    const response = await axios.get(`${serverUrl}/api/product/findproduct/${data}`);
+    const response = await axios.get(`${serverUrl}/api/product/allproduct`, {
+      params: { category: data }
+    });
 
-   // console.log("response from api fil",response.data);
+    console.log("response from api fil",response);
 
     return response.data
 
@@ -92,6 +97,8 @@ const AddproductSlice = createSlice({
 
            // console.log(" --------------------> ",action.payload);
 
+             console.log('filter data from add slice  is called ');
+
         state.data= action.payload
 
       }
@@ -109,7 +116,6 @@ const AddproductSlice = createSlice({
         .addCase(fetchProducts.fulfilled, (state, action) => {
           state.loading = false;
 
-          console.log("fetchproducts state",state.data);
 
 
           state.data= action.payload;
@@ -129,12 +135,19 @@ const AddproductSlice = createSlice({
         .addCase(createProducts.fulfilled,(state,action)=>{
               state.loading = false ;
 
-              console.log("state from createProducts",state);
+              //console.log("state from createProducts",state);
 
 
              // state.addpro = state?.addpro?.push(action.payload)
 
+           //  console.log("action payload from create product ",action.payload);
+
+
             const ds = action.payload;
+
+            //console.log("i am calling from createproduct function which is written inside add slice",ds);
+
+
 state?.data?.push(ds);  // without question mark this will give you error
 
         })

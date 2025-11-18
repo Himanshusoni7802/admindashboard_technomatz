@@ -5,8 +5,14 @@ import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { updateProductApi } from "../app/ProductSlice";
 
+import {toast} from "react-hot-toast";
+
+
 const ProductUpdate = () => {
   const { id } = useParams();
+
+  console.log(id);
+
 
   console.log(id);
 
@@ -15,6 +21,16 @@ const ProductUpdate = () => {
   const dispatch = useDispatch();
 
   const { data } = useSelector((state) => state.addpro);
+
+
+
+
+    
+
+
+
+  console.log("product update page data ",data);
+
 
   const [uname, setUname] = useState("");
 
@@ -65,8 +81,12 @@ const ProductUpdate = () => {
         })
       );
 
-      console.log(" User updated:", result);
-      alert("User updated successfully!");
+      //console.log(" User updated:", result);
+
+
+      // alert("User updated successfully!");
+      toast.success("Product is added successfully ");
+
 
       navigate("/products");
     } catch (error) {

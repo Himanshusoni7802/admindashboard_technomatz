@@ -4,7 +4,7 @@ import Customerdashboard from "./Components/Customerdashboard.jsx";
 import Login from "./Components/Login";
 
 import Signup from "./Components/Signup";
-import UpdateProduct from "./Components/UpdateProduct.jsx";
+
 
 import Home from "./Pages/Home.jsx";
 
@@ -18,6 +18,8 @@ import ViewUsers from "./Components/ViewUsers.jsx";
 
 import ShowallProducts from "./Components/ShowallProducts.jsx";
 import ProductUpdate from "./Components/ProductUpdate.jsx";
+import ProfileComponent from "./Components/ProfileComponet.jsx";
+import ProfileUpdate from "./Components/ProfileUpdate.jsx";
 
 const App = () => {
   return (
@@ -62,6 +64,12 @@ const App = () => {
         <Route path={"/view"} element={<ViewUsers />} />
 
         <Route path={"/products"} element={<ShowallProducts />} />
+
+         <Route path={'/profile'} element={<ProfileComponent />} />
+
+
+         <Route path={'/updateuserinfo'} element={<ProfileUpdate />} />
+
       </Routes>
     </div>
   );

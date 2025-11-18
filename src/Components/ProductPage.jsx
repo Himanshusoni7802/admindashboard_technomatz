@@ -1,11 +1,11 @@
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { addProduct, deleteProduct } from "../app/ProductSlice";
 
-import { fetchUsers } from "../app/ProductSlice";
+import {toast} from "react-hot-toast";
 
-import { useEffect } from "react";
-import { useState } from "react";
+
+
 
 //import { deleteUserApi } from "../app/ProductSlice";
 
@@ -15,11 +15,14 @@ const ProductPage = () => {
   const dispatch = useDispatch();
   const { data, loading, error } = useSelector((state) => state.product);
 
+  const navigate = useNavigate();
 
 
-  useEffect(() => {
-    dispatch(fetchUsers());
-  }, []);
+
+
+  // useEffect(() => {
+  //   dispatch(fetchUsers());
+  // }, []);
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error: {error}</p>;
@@ -36,6 +39,17 @@ const ProductPage = () => {
     dispatch(deleteUserApi(id));
   };
 
+
+  const logout = ()=>{
+
+        localStorage.clear();
+
+        toast.success("Admin logout successfully");
+
+
+        navigate('/');
+
+  }
 
 
 
@@ -62,8 +76,14 @@ const ProductPage = () => {
               <Link to="/view">View Users</Link>
 
               <Link to="/products">Show all Products</Link>
+
+              <Link to='/create'>Create</Link>
+
+              <button onClick={logout}>logout</button>
             </nav>
         </div>
+
+
 
 
 

@@ -1,32 +1,27 @@
-import { StrictMode } from 'react'
-import { createRoot } from 'react-dom/client'
-import './index.css'
-import App from './App.jsx'
+import { StrictMode } from "react";
+import { createRoot } from "react-dom/client";
+import "./index.css";
+import App from "./App.jsx";
 
-import { BrowserRouter } from 'react-router-dom'
+import { BrowserRouter } from "react-router-dom";
 
-import { Provider } from 'react-redux'
-import store from './app/store.jsx'
+import { Provider } from "react-redux";
+import store from "./app/store.jsx";
 
+//import { ToastContainer } from 'react-toastify';
 
+import { Toaster } from "react-hot-toast";
 
-createRoot(document.getElementById('root')).render(
+import "react-toastify/dist/ReactToastify.css";
 
+createRoot(document.getElementById("root")).render(
+  <BrowserRouter>
+    <Provider store={store}>
 
-    <BrowserRouter>
+        <App />
 
+        <Toaster/>
 
-  <Provider store={store}>
-
-           <App />
-
-  </Provider>
-
-
-
-    </BrowserRouter>
-
-    
-
-
-)
+    </Provider>
+  </BrowserRouter>
+);

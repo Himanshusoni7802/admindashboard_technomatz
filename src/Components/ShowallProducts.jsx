@@ -11,30 +11,50 @@ import { HiOutlinePencil } from "react-icons/hi";
 
 import { Link } from "react-router-dom";
 
+import {toast} from "react-hot-toast";
+
+
 const ShowallProducts = () => {
   const [inp, setInput] = useState("");
 
   //const [data,setData] = useState(null) ;
   const dispatch = useDispatch();
 
+  //const val = "No product found" ;
+
+
   const { data, loading, error } = useSelector((state) => state.addpro);
 
-  //console.log(data) ;
+  console.log("--------------------------->")
+
+  console.log("data from showall products",data) ;
+
+
 
   useEffect(() => {
-    dispatch(fetchProducts());
+  dispatch(fetchProducts());
+
   }, []);
 
   const searchItem = async (text) => {
     if (!text || text.trim() === "") return; // ignore empty search
 
     try {
-      const result = await dispatch(filterPrducts(text));
+      const result = await dispatch(fetchProducts(text));
 
       // console.log(result);
 
+     //  console.log(result.payload);
+
+
       if (result.payload) {
+
+       // console.log("data product from showallproducts",result.payload)
+
         dispatch(addFilterData(result.payload));
+      }
+      else {
+        console.log("No products found");
       }
     } catch (error) {
       console.log(error);
@@ -50,13 +70,13 @@ const ShowallProducts = () => {
 
   return (
     <div>
-      <h1>All Products </h1>
 
-      <Link to="/admin">Go back</Link>
+
+      <Link className="bg-green-500 px-3 py-3 rounded-2xl my-12" to="/admin">Go back</Link>
 
       <div className="w-full px-20 py-10">
         <div className="flex flex-col gap-6">
-          <h1 className="text-3xl font-bold mb-4">All Products</h1>
+          <h1 className="text-3xl font-bold mb-4 text-center">All Products</h1>
 
           <div>
             <input

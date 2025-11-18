@@ -2,7 +2,9 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 //import { addProduct } from "../app/ProductSlice";
 import { useNavigate } from "react-router-dom";
-import { createProducts, fetchProducts } from "../app/AddproductSlice";
+import { createProducts } from "../app/AddproductSlice";
+
+import {toast} from "react-hot-toast"
 
 const CreateProduct = () => {
   const [name, setName] = useState("");
@@ -25,14 +27,12 @@ const CreateProduct = () => {
 
   console.log("res---------------------",res);
 
-//   useEffect(() => {
-//     dispatch(fetchProducts());
-//   }, []);
+
 
   const submitHandler = async (e) => {
     e.preventDefault();
 
-    console.log(name + price + category + description);
+   // console.log(name + price + category + description);
 
     if (!name || !description || !category || !price) {
       alert("All fields is required ");
@@ -51,9 +51,13 @@ const CreateProduct = () => {
         })
       );
 
-      console.log("Data addes====================== ", result);
+   
 
-      // navigate("/customer");
+
+       toast.success("Product is Added successfully ");
+
+       navigate("/products");
+
     } catch (error) {
       console.log("Error occured ",error);
     } finally {
