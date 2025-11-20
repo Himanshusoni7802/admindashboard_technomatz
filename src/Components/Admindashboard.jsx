@@ -1,22 +1,13 @@
 import ProductPage from "./ProductPage";
 
-//import FetchUser from "../hooksapi/FetchUser.jsx";
 
 
-const Admindashboard = ()=>{
-
-
-
-
-
-
+const Admindashboard = () => {
   return (
-      <div>
+    <div>
+      <ProductPage />
+    </div>
+  );
+};
 
-            <ProductPage />
-
-      </div>
-  )
-}
-
-export default Admindashboard ;
+export default Admindashboard;

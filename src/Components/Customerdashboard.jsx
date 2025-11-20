@@ -8,6 +8,8 @@ import { CgProfile } from "react-icons/cg";
 import { addFilterData, fetchProducts } from "../app/AddproductSlice";
 
 import { Link } from "react-router-dom";
+import { addIntoCart } from "../app/UserSlice";
+import toast from "react-hot-toast";
 
 const Customerdashboard = () => {
   const dispatch = useDispatch();
@@ -16,11 +18,22 @@ const Customerdashboard = () => {
   const { data, loading, error } = useSelector((state) => state.addpro);
 
 
+  const addTocartButton = (item)=>{
+
+    console.log("addinto cart from customer ")
+        dispatch(addIntoCart(item));
+
+        toast.success("Product is added into the cart ");
+        
+
+  }
+
+
 
   useEffect(() => {
 
     console.log("data fetched ");
-    
+
 
     dispatch(fetchProducts());
 
@@ -56,6 +69,9 @@ const Customerdashboard = () => {
         <Link to="/profile" className="absolute right-3 top-1">
           <CgProfile size={30} />
         </Link>
+
+        <Link to ='/cart'>Cart page</Link>
+
       </nav>
 
       <div className="w-full px-20 py-10">
@@ -98,6 +114,9 @@ const Customerdashboard = () => {
                   <p className="text-green-600 font-bold text-lg mt-2">
                     ₹{item.price}
                   </p>
+
+                  <button onClick={()=>addTocartButton(item)} className="bg-blue-400 px-3 py-2 rounded-xl">Add to cart</button>
+
                 </div>
               ))}
           </div>

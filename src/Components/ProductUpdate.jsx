@@ -5,32 +5,16 @@ import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { updateProductApi } from "../app/ProductSlice";
 
-import {toast} from "react-hot-toast";
-
+import { toast } from "react-hot-toast";
 
 const ProductUpdate = () => {
   const { id } = useParams();
-
-  console.log(id);
-
-
-  console.log(id);
 
   const navigate = useNavigate();
 
   const dispatch = useDispatch();
 
   const { data } = useSelector((state) => state.addpro);
-
-
-
-
-    
-
-
-
-  console.log("product update page data ",data);
-
 
   const [uname, setUname] = useState("");
 
@@ -44,7 +28,7 @@ const ProductUpdate = () => {
 
   useEffect(() => {
     if (data.length > 0) {
-      const existProduct = data.find((item) => item?._id === id)
+      const existProduct = data.find((item) => item?._id === id);
 
       if (existProduct) {
         setUname(existProduct.name);
@@ -54,8 +38,6 @@ const ProductUpdate = () => {
 
         setUdescription(existProduct.description);
       }
-
-      //   console.log("------->",uname,uprice,ucategory,udescription)
     }
   }, [data, id]);
 
@@ -63,7 +45,7 @@ const ProductUpdate = () => {
     e.preventDefault();
 
     if (!uname || !uprice || !ucategory || !udescription) {
-      alert("Please fill all fields");
+      toast.success("Please fill all fields");
 
       return;
     }
@@ -81,12 +63,7 @@ const ProductUpdate = () => {
         })
       );
 
-      //console.log(" User updated:", result);
-
-
-      // alert("User updated successfully!");
       toast.success("Product is added successfully ");
-
 
       navigate("/products");
     } catch (error) {
@@ -95,7 +72,9 @@ const ProductUpdate = () => {
   };
 
   return (
-    <div className="mx-9 my-10">
+    <div className="mx-9 my-10 w-[30%] h-[30%] flex  justify-center mx-90 my-30 relative">
+      <h1 className="absolute top-0 my-6">Update Product</h1>
+
       <form onSubmit={submitHandler} className="flex flex-col gap-3">
         <label>Name</label>
         <input

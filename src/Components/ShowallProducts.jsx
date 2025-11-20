@@ -11,50 +11,29 @@ import { HiOutlinePencil } from "react-icons/hi";
 
 import { Link } from "react-router-dom";
 
-import {toast} from "react-hot-toast";
-
+import { toast } from "react-hot-toast";
 
 const ShowallProducts = () => {
   const [inp, setInput] = useState("");
 
-  //const [data,setData] = useState(null) ;
   const dispatch = useDispatch();
-
-  //const val = "No product found" ;
-
 
   const { data, loading, error } = useSelector((state) => state.addpro);
 
-  console.log("--------------------------->")
-
-  console.log("data from showall products",data) ;
-
-
-
   useEffect(() => {
-  dispatch(fetchProducts());
-
+    dispatch(fetchProducts());
   }, []);
 
   const searchItem = async (text) => {
-    if (!text || text.trim() === "") return; // ignore empty search
+    if (!text || text.trim() === "") return;
 
     try {
       const result = await dispatch(fetchProducts(text));
 
-      // console.log(result);
-
-     //  console.log(result.payload);
-
-
       if (result.payload) {
-
-       // console.log("data product from showallproducts",result.payload)
-
         dispatch(addFilterData(result.payload));
-      }
-      else {
-        console.log("No products found");
+      } else {
+        return <div>No Product found from this category </div>;
       }
     } catch (error) {
       console.log(error);
@@ -65,14 +44,17 @@ const ShowallProducts = () => {
     // console.log(id) ;
 
     await dispatch(deleteProductApi(id));
+
+    toast.success("Item is deleted Successfully ");
+
     await dispatch(fetchProducts());
   };
 
   return (
     <div>
-
-
-      <Link className="bg-green-500 px-3 py-3 rounded-2xl my-12" to="/admin">Go back</Link>
+      <Link className="bg-green-500 px-3 py-3 rounded-2xl my-12" to="/admin">
+        Go back
+      </Link>
 
       <div className="w-full px-20 py-10">
         <div className="flex flex-col gap-6">
@@ -94,21 +76,21 @@ const ShowallProducts = () => {
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-            {data?.length > 0 &&
+            {data?.length > 0 ? (
               data?.map((item) => (
                 <div
                   key={item._id}
-                  className="border rounded-xl p-4 shadow hover:shadow-lg transition-all duration-200 bg-white"
+                  className="border rounded-xl p-4 shadow hover:shadow-lg transition-all duration-200 bg-white relative"
                 >
                   <h2 className="text-xl font-semibold">{item.name}</h2>
 
-                  <div>
-                    <button onClick={() => handleDeleteProduct(item._id)}>
-                      <MdDelete />
+                  <div className="flex absolute  right-5 gap-8">
+                    <button title="delete" onClick={() => handleDeleteProduct(item._id)}>
+                      <MdDelete size={20} />
                     </button>
 
                     <Link to={`/update/product/${item._id}`}>
-                      <HiOutlinePencil />
+                      <HiOutlinePencil title="update" size={20} />
                     </Link>
                   </div>
 
@@ -125,7 +107,10 @@ const ShowallProducts = () => {
                     ₹{item.price}
                   </p>
                 </div>
-              ))}
+              ))
+            ) : (
+              <div>No Product Found from this category </div>
+            )}
           </div>
         </div>
       </div>

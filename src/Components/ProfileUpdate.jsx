@@ -2,18 +2,22 @@ import { useState } from "react";
 import { userUpdateApi } from "../app/UserSlice";
 import { useDispatch } from "react-redux";
 
-import {Link} from "react-router-dom"
+import { Link } from "react-router-dom";
+
+import { toast } from "react-hot-toast";
+
+import { useNavigate } from "react-router-dom";
 
 const ProfileUpdate = () => {
-  // Extract the passed state
-
   const data = localStorage.getItem("user");
 
   const res = JSON.parse(data);
 
-  const { id, name, email, role } = res;
+  const { _id, name, email, role } = res;
 
   const dispatch = useDispatch();
+
+  const navigate = useNavigate();
 
   // console.log(name,email,role)
 
@@ -36,19 +40,21 @@ const ProfileUpdate = () => {
     try {
       const result = await dispatch(
         userUpdateApi({
-          id: id,
+          id: _id,
           name: uname,
           email: uemail,
           role: urole,
         })
       );
 
-      // alert("User updated successfully!")
-
       console.log(" User updated:", result);
-      alert("User updated successfully!");
+      toast.success("User updated successfully!");
 
-      //navigate("/admin");
+      const obj = result.payload.user;
+
+      localStorage.setItem("user", JSON.stringify(obj));
+
+      navigate("/profile");
     } catch (err) {
       console.error(" Update failed:");
       alert("Error updating user: " + err);
@@ -58,54 +64,63 @@ const ProfileUpdate = () => {
 
   return (
     <div className=" shadow-xl  rounded-3xl flex flex-col my-25 mx-80 w-[500px] h-[400px] justify-center items-center relative">
-
-         <Link className="absolute  top-0 left-10" to='/customer'>Go to user dashboard</Link>
+      <Link className="absolute  top-0 left-10" to="/customer">
+        Go to user dashboard
+      </Link>
 
       <div className="text-center flex items-center justify-center">
         <h1 className="underline bold">Update User Info</h1>{" "}
       </div>
 
       <div className="flex justify-center items-center">
+        <form onSubmit={handleSubmit} className="relative">
+          <div className="flex gap-5">
+            <label className="font-semibold mb-1" htmlFor="name">
+              Update Name
+            </label>
+            <input
+              onChange={(e) => setUname(e.target.value)}
+              className="outline border rounded p-2 mb-3"
+              type="text"
+              placeholder="enter update name"
+              value={uname}
+            ></input>
+          </div>
 
-      <form onSubmit={handleSubmit} className="relative">
-        <div>
-          <label htmlFor="name" className="font-bold">Update Name</label>
-          <input
-            onChange={(e) => setUname(e.target.value)}
-            className="outline-2 mx-5 my-5"
-            type="text"
-            placeholder="enter update name"
-            value={uname}
-          ></input>
-        </div>
+          <div>
+            <label htmlFor="email" className="font-semibold mb-1">
+              Update Email
+            </label>
+            <input
+              onChange={(e) => setUemail(e.target.value)}
+              className="outline p-2 border rounded"
+              type="text"
+              placeholder="enter update name"
+              value={uemail}
+            ></input>
+          </div>
 
-        <div>
-          <label htmlFor="email" className="font-bold">Update Email</label>
-          <input
-            onChange={(e) => setUemail(e.target.value)}
-            className="outline-2 mx-5 my-5"
-            type="text"
-            placeholder="enter update name"
-            value={uemail}
-          ></input>
-        </div>
+          <div>
+            <label htmlFor="role" className="font-semibold mb-1">
+              Update Role
+            </label>
+            <input
+              onChange={(e) => setUrole(e.target.value)}
+              className="outline-2 mx-8 my-5"
+              type="text"
+              placeholder="enter update name"
+              value={urole}
+            ></input>
+          </div>
 
-        <div>
-          <label htmlFor="role" className="font-bold">Update Role</label>
-          <input
-            onChange={(e) => setUrole(e.target.value)}
-            className="outline-2 mx-8 my-5"
-            type="text"
-            placeholder="enter update name"
-            value={urole}
-          ></input>
-        </div>
-
-        <button className="absolute left-45 bg-blue-800 rounded-2xl px-4 py-4 text-white" type="submit">Update</button>
-      </form>
-
+          <button
+            className="absolute left-45 bg-blue-800 rounded-2xl px-4 py-4 text-white"
+            type="submit"
+          >
+            Update
+          </button>
+        </form>
       </div>
-
     </div>
   );
 };

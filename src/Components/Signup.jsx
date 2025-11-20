@@ -44,66 +44,66 @@ const Signup = () => {
   };
 
   return (
-    <div className=" shadow-2xl w-[450px] h-[500px] flex justify-center items-center mx-[30%] my-[4%]  rounded-xl">
-      <form onSubmit={handleSubmit}>
+    <div className="flex justify-center">
+      <form onSubmit={handleSubmit} className="mx-9 my-10  flex flex-col gap-5 w-[40%] shadow-2xl rounded-xl p-8 items-center ">
         <div className="flex flex-col justify-center items-center">
           <h1 className="bg-blue-500 w-28 text-white rounded-2xl text-center py-2">
             Sign up
           </h1>
-          <div>
-            <label htmlFor="name">Name</label>
+          <div className="flex flex-col gap-2">
+            <label className="font-medium " htmlFor="name">Name</label>
             <input
               onChange={(e) => setName(e.target.value)}
-              className="outline-2 w-[300px] mx-3 my-3"
+              className="outline p-2 border rounded mb-1"
               type="text"
               id="name"
               placeholder="Enter your Name"
             />
           </div>
 
-          <div>
-            <label htmlFor="email">Email</label>
+          <div className="flex flex-col gap-2">
+            <label className="font-medium mb-1" htmlFor="email">Email</label>
             <input
               onChange={(e) => setEmail(e.target.value)}
-              className="outline-2 w-[300px] mx-3 my-3"
+              className="outline p-2 rounded border"
               type="email"
               id="email"
               placeholder="Enter your email"
             />
           </div>
 
-          <div className="relative">
-            {/* <input  onChange={(e)=>setPassword(e.target.value)} className="outline mx-3 my-3 w-[40] " type="password" id="pass" placeholder="Enter your Password" /> */}
+          <div className="relative flex flex-col">
+            
 
-            <label htmlFor="pass" className="my-2 mx-1">
+            <label className="font-medium mb-1" htmlFor="pass">
               Password
             </label>
             <input
               required
               onChange={(e) => setPassword(e.target.value)}
-              className="outline-2 w-[300px] mx-1 my-3 w-[40]"
+              className="outline p-2 border rounded"
               type={showpassword ? "text" : "password"}
               id="pass"
               placeholder="Enter your Password"
             />
             {showpassword ? (
               <FaEye
-                className="my-3 absolute top-1 right-6"
+                className="my-3 absolute top-7 right-6"
                 onClick={togglePassword}
               />
             ) : (
               <FaEyeSlash
-                className="my-3 absolute top-1 right-6"
+                className="my-3 absolute top-7 right-6"
                 onClick={togglePassword}
               />
             )}
           </div>
 
-          <div>
-            <label htmlFor="role">Role</label>
+          <div className="flex flex-col ">
+            <label className="font-medium mb-1" htmlFor="role">Role</label>
             <input
               onChange={(e) => setRole(e.target.value)}
-              className="outline-2 w-[300px] mx-3 my-3"
+              className="outline p-2 rounded border mb-4"
               type="text"
               id="role"
               placeholder="Enter your role"
