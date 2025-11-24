@@ -5,20 +5,52 @@ import { fetchProducts, filterPrducts } from "../app/AddproductSlice";
 import { addFilterData } from "../app/AddproductSlice";
 import { deleteProductApi } from "../app/ProductSlice";
 
-import { MdDelete } from "react-icons/md";
 
-import { HiOutlinePencil } from "react-icons/hi";
 
 import { Link } from "react-router-dom";
 
 import { toast } from "react-hot-toast";
+
+import Pagination from "../Components/Pagination.jsx" ;
+
+
+
 
 const ShowallProducts = () => {
   const [inp, setInput] = useState("");
 
   const dispatch = useDispatch();
 
+
   const { data, loading, error } = useSelector((state) => state.addpro);
+
+  const dataperpages = 5 ;
+  let totalpages =  Math.ceil(data.length / dataperpages) ;
+
+
+
+
+
+
+  const [currentpage,setCurrentPage] = useState(1) ;
+
+
+  let lastindex = totalpages * currentpage ;
+
+  let firstindex = lastindex - totalpages ;
+
+
+  let content = data.slice(firstindex,lastindex);
+
+
+  //console.log("content",content);
+
+
+
+
+
+
+
 
   useEffect(() => {
     dispatch(fetchProducts());
@@ -40,15 +72,9 @@ const ShowallProducts = () => {
     }
   };
 
-  const handleDeleteProduct = async (id) => {
-    // console.log(id) ;
 
-    await dispatch(deleteProductApi(id));
 
-    toast.success("Item is deleted Successfully ");
 
-    await dispatch(fetchProducts());
-  };
 
   return (
     <div>
@@ -76,41 +102,10 @@ const ShowallProducts = () => {
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-            {data?.length > 0 ? (
-              data?.map((item) => (
-                <div
-                  key={item._id}
-                  className="border rounded-xl p-4 shadow hover:shadow-lg transition-all duration-200 bg-white relative"
-                >
-                  <h2 className="text-xl font-semibold">{item.name}</h2>
 
-                  <div className="flex absolute  right-5 gap-8">
-                    <button title="delete" onClick={() => handleDeleteProduct(item._id)}>
-                      <MdDelete size={20} />
-                    </button>
+          <Pagination totalpages = {totalpages} currentpage={currentpage} setCurrentPage={setCurrentPage} content={content} />
 
-                    <Link to={`/update/product/${item._id}`}>
-                      <HiOutlinePencil title="update" size={20} />
-                    </Link>
-                  </div>
 
-                  <p className="text-gray-600 text-sm my-2">
-                    {item.description}
-                  </p>
-
-                  <p className="text-gray-700 font-medium">
-                    Category:{" "}
-                    <span className="text-amber-700">{item.category}</span>
-                  </p>
-
-                  <p className="text-green-600 font-bold text-lg mt-2">
-                    ₹{item.price}
-                  </p>
-                </div>
-              ))
-            ) : (
-              <div>No Product Found from this category </div>
-            )}
           </div>
         </div>
       </div>
